@@ -1,4 +1,4 @@
-package com.github.ftfetter.webfluxdemo
+package com.github.ftfetter.lead
 
 import org.junit.Test
 import org.junit.runner.RunWith

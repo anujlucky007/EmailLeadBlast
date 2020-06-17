@@ -1,7 +1,7 @@
-package com.github.ftfetter.webfluxdemo.controller
+package com.github.ftfetter.lead.controller
 
-import com.github.ftfetter.webfluxdemo.model.Tweet
-import com.github.ftfetter.webfluxdemo.repository.TweetRepository
+import com.github.ftfetter.lead.model.Tweet
+import com.github.ftfetter.lead.repository.TweetRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE
 import org.springframework.http.ResponseEntity

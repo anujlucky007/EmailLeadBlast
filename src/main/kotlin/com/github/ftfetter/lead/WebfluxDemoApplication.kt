@@ -1,4 +1,4 @@
-package com.github.ftfetter.webfluxdemo
+package com.github.ftfetter.lead
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

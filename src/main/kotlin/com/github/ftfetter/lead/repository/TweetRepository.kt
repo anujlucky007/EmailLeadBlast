@@ -1,6 +1,6 @@
-package com.github.ftfetter.webfluxdemo.repository
+package com.github.ftfetter.lead.repository
 
-import com.github.ftfetter.webfluxdemo.model.Tweet
+import com.github.ftfetter.lead.model.Tweet
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.data.mongodb.repository.Tailable
 import org.springframework.stereotype.Repository
