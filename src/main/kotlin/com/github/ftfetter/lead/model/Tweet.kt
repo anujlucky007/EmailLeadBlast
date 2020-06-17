@@ -4,12 +4,17 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
 import java.time.LocalDateTime
+import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
-@Document("messages")
-class MessageDetails( val customerMobileNumber: String, val contact: Contact, val messageList: List<Message>, val lastReceivedMessageTime: Long,
-                  var status:Status
+@Document("MessageDetails")
+class MessageDetails(
+        @Id val uuid: UUID,
+        val customerMobileNumber: String,
+                     val contact: Contact, var messageList: MutableList<Message> = mutableListOf(),
+                     var lastReceivedMessageTime: Long = System.currentTimeMillis(),
+                     var status:Status
 )
 
 enum class Status {
