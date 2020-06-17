@@ -1,7 +1,7 @@
-package com.example.service;
+package com.lead.service;
 
-import com.example.model.Post;
-import com.example.repository.PostRepository;
+import com.lead.model.MessagePost;
+import com.lead.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,20 +16,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Mono<Post> save(Post post) {
-        return postRepository.save(post);
+    public Mono<MessagePost> save(MessagePost messagePost) {
+        return postRepository.save(messagePost);
     }
 
     @Override
-    public Mono<Post> update(Post post) {
-        return postRepository.findById(post.getId())
+    public Mono<MessagePost> update(MessagePost messagePost) {
+        return postRepository.findById(messagePost.getId())
                 .flatMap(
-                        postDB -> postRepository.save(postDB.update(post))
+                        postDB -> postRepository.save(postDB.update(messagePost))
                 );
     }
 
     @Override
-    public Mono<Post> findOne(String id) {
+    public Mono<MessagePost> findOne(String id) {
         return postRepository.findById(id);
     }
 
@@ -43,7 +43,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Flux<Post> findAll() {
+    public Flux<MessagePost> findAll() {
         return postRepository.findAll();
     }
 }

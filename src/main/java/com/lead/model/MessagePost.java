@@ -1,4 +1,4 @@
-package com.example.model;
+package com.lead.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 
 @Document
-public class Post {
+public class MessagePost {
 
     @Id
     private String id;
@@ -24,7 +24,7 @@ public class Post {
     @Version
     private Integer version;
 
-    public Post update(Post entity) {
+    public MessagePost update(MessagePost entity) {
         this.title = entity.getTitle();
         this.text = entity.getText();
         this.category = entity.getCategory();

@@ -1,7 +1,7 @@
-package com.example;
+package com.lead;
 
-import com.example.model.Post;
-import com.example.service.PostService;
+import com.lead.model.MessagePost;
+import com.lead.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,29 +11,29 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/posts")
-public class PostController {
+public class MessagePostController {
 
     private final PostService postService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public MessagePostController(PostService postService) {
         this.postService = postService;
     }
 
     @GetMapping(path = "/{id}")
-    public Mono<Post> get(@PathVariable String id) {
+    public Mono<MessagePost> get(@PathVariable String id) {
         return postService.findOne(id);
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Post>> save(@RequestBody Post post) {
-        return postService.save(post)
+    public Mono<ResponseEntity<MessagePost>> save(@RequestBody MessagePost messagePost) {
+        return postService.save(messagePost)
                 .map(savedHotel -> new ResponseEntity<>(savedHotel, HttpStatus.CREATED));
     }
 
     @PutMapping
-    public Mono<ResponseEntity<Post>> update(@RequestBody Post post) {
-        return postService.update(post)
+    public Mono<ResponseEntity<MessagePost>> update(@RequestBody MessagePost messagePost) {
+        return postService.update(messagePost)
                 .map(savedPost -> new ResponseEntity<>(savedPost, HttpStatus.CREATED))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -47,7 +47,7 @@ public class PostController {
     }
 
     @GetMapping(path = "/")
-    public Flux<Post> findAll() {
+    public Flux<MessagePost> findAll() {
         return postService.findAll();
     }
 
