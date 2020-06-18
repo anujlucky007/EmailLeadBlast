@@ -5,6 +5,7 @@ import com.github.ftfetter.lead.model.Status
 import com.github.ftfetter.lead.model.WebMessage
 import com.github.ftfetter.lead.repository.MessageRepository
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.switchIfEmpty
 import java.util.*
@@ -26,5 +27,17 @@ class MessageService(val messageRepository: MessageRepository) {
                     true
                 }
     }
+
+
+    fun processMessage(): Flux<Boolean> {
+
+        return messageRepository.findByStatusAndLastReceivedMessageTimeLessThan(Status.NOT_PROCESSED,System.currentTimeMillis())
+                .map {
+                    println(it.contact.uid)
+                    true
+                }
+    }
+
+
 
 }

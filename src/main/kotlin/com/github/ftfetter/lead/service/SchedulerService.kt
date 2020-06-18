@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class SchedulerService() {
+class SchedulerService(val messageService: MessageService) {
 
 
     @Scheduled(fixedRate = 20000)
     fun publish() {
         val average: Long = System.currentTimeMillis()
-        println("Anuj"+average)
+        messageService.processMessage().subscribe()
     }
 
 

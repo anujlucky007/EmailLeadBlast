@@ -15,4 +15,5 @@ interface MessageRepository : ReactiveMongoRepository<MessageDetails, String> {
     fun findWithTailableCursorBy(): Flux<MessageDetails>
 
     fun findByCustomerMobileNumberAndStatus(customerMobileNumber : String,status: Status): Mono<MessageDetails>
+    fun findByStatusAndLastReceivedMessageTimeLessThan( status: Status,nextExecutionTime: Long): Flux<MessageDetails>
 }
