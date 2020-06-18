@@ -29,9 +29,9 @@ class MessageService(val messageRepository: MessageRepository) {
     }
 
 
-    fun processMessage(): Flux<Boolean> {
+    fun processMessage( time:Long): Flux<Boolean> {
 
-        return messageRepository.findByStatusAndLastReceivedMessageTimeLessThan(Status.NOT_PROCESSED,System.currentTimeMillis())
+        return messageRepository.findByStatusAndLastReceivedMessageTimeLessThan(Status.NOT_PROCESSED,time)
                 .map {
                     println(it.contact.uid)
                     true
