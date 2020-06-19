@@ -1,5 +1,6 @@
 package com.github.ftfetter.lead.controller
 
+import com.github.ftfetter.lead.model.WebMessage
 import com.github.ftfetter.lead.repository.MessageRepository
 import com.github.ftfetter.lead.service.MessageService
 import org.springframework.http.MediaType
@@ -11,6 +12,7 @@ import org.synchronoss.cloud.nio.multipart.MultipartUtils.getHeaders
 import reactor.core.Disposable
 import reactor.core.publisher.Mono
 import java.util.*
+import javax.validation.Valid
 
 
 @RestController
@@ -23,7 +25,7 @@ class MessageController(val messageRepository: MessageRepository,val messageServ
     @RequestMapping(value = ["/whatsapp"], method = [RequestMethod.POST],consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
     fun saveMessage(exchange: ServerWebExchange ): Mono<HashMap<String, Any>> {
         val form = HashMap<String, Any>()
-        return  exchange.getFormData().map{
+        return  exchange.formData.map{
              map ->
             for ((key, value1) in map.entries) {
                 for (value in value1) {
@@ -38,6 +40,9 @@ class MessageController(val messageRepository: MessageRepository,val messageServ
        // messageService.saveMessage(WebMessage("11", Contact("11","1","1"), Message("","","","")))
     }
 
+
+    @PostMapping(value = ["/whatsapp/json"],consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun saveMessage(@Valid @RequestBody webMessage: WebMessage) = messageService.saveMessage(webMessage)
     @GetMapping("/{id}")
     fun getMessageByMobileNumber(@PathVariable("id") customerMobileNumber: String) = messageRepository.findById(customerMobileNumber)
             .map { ResponseEntity.ok(it) }
