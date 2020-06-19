@@ -1,5 +1,7 @@
 package com.github.ftfetter.lead.controller
 
+import com.github.ftfetter.lead.model.Contact
+import com.github.ftfetter.lead.model.Message
 import com.github.ftfetter.lead.model.WebMessage
 import com.github.ftfetter.lead.repository.MessageRepository
 import com.github.ftfetter.lead.service.MessageService
@@ -23,8 +25,8 @@ class MessageController(val messageRepository: MessageRepository,val messageServ
     fun getAllTweets() = messageRepository.findAll()
 
     @RequestMapping(value = ["/whatsapp"], method = [RequestMethod.POST],consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
-    fun saveMessage(exchange: ServerWebExchange ): Mono<HashMap<String, Any>> {
-        val form = HashMap<String, Any>()
+    fun saveMessage(exchange: ServerWebExchange ): Mono<Boolean> {
+        val form = HashMap<String, String>()
         return  exchange.formData.map{
              map ->
             for ((key, value1) in map.entries) {
@@ -35,9 +37,12 @@ class MessageController(val messageRepository: MessageRepository,val messageServ
             println(form)
             form
         }.map{
-            it
+            val contact = Contact(uid = it["contact[uid]"].toString(),name = it["contact[name]"].toString(),type=it["contact[type]"].toString())
+            val message = Message(dtm=it["message[dtm]"]!!,cuid= it["message[cuid]"],uid=it["message[uid]"]!!,dir=it["message[dir]"],type=it["message[type]"],body = it["message[body][text]"])
+            WebMessage(contact =contact,message =  message,uid = it["uid"].toString())
+        }.flatMap {
+            messageService.saveMessage(it)
         }
-       // messageService.saveMessage(WebMessage("11", Contact("11","1","1"), Message("","","","")))
     }
 
 
